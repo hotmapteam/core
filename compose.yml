@@ -1,0 +1,17 @@
+services:
+    db:
+        image: mongo:latest
+        environment:
+            MONGO_INITDB_ROOT_USERNAME: root
+            MONGO_INITDB_ROOT_PASSWORD: root
+            MONGO_INITDB_DATABASE: default
+    core:
+        build: "."
+        links:
+            - db
+        environment:
+            TELEGRAM_API_ID: ${TELEGRAM_API_ID}
+            TELEGRAM_API_HASH: ${TELEGRAM_API_HASH}
+            SIMPLE_SETTINGS: settings.base
+        volumes:
+            - "./telegram.session:/app/telegram.session"
