@@ -10,6 +10,10 @@ motor = "*"
 
 [dev-packages]
 pre-commit = "*"
+pylint = "*"
 
 [requires]
 python_version = "3.9"
+
+[packages.umongo]
+extras = [ "motor",]

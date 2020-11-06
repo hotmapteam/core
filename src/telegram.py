@@ -7,6 +7,12 @@ client = TelegramClient(
 )
 
 
+async def list_messages(dialog_id):
+    async with client:
+        async for message in client.iter_messages(dialog_id):
+            yield message
+
+
 async def main():
     parser = argparse.ArgumentParser()
     parser.add_argument(
@@ -20,9 +26,10 @@ async def main():
             print(dialog.id, "\t", dialog.name)
 
     if args.list_messages:
-        async for message in client.iter_messages(args.list_messages):
-            print(message.date, message.id, message.raw_text)
+        async for message in list_messages(args.list_messages):
+            print(message.date, message.raw_text)
 
 
-with client:
-    client.loop.run_until_complete(main())
+if __name__ == "__main__":
+    with client:
+        client.loop.run_until_complete(main())
