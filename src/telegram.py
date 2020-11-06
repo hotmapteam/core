@@ -8,7 +8,6 @@ client = TelegramClient(
 
 
 async def main():
-
     parser = argparse.ArgumentParser()
     parser.add_argument(
         "--list-dialogs", action="store_true", help="list chats and channels"
