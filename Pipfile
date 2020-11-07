@@ -9,6 +9,8 @@ simple-settings = "*"
 motor = "*"
 sanic = "*"
 sanic-cors = "*"
+geopy = "*"
+natasha = "*"
 
 [dev-packages]
 pre-commit = "*"

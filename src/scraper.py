@@ -3,6 +3,9 @@ import asyncio
 import storage
 import logging
 import argparse
+import classificator
+
+from geopy.geocoders import Nominatim as Geolocator
 
 
 async def scrap():
@@ -11,8 +14,31 @@ async def scrap():
         if feed.type == "telegram":
             async for message in telegram.list_messages(int(feed.uri)):
                 logging.debug("message %r", message)
+
+                classification_spans = classificator.classificate(message.raw_text)
+
+                org = classification_spans.get("ORG", None)
+                address = classification_spans.get("LOC", None)
+
+                if not address and org:
+                    address = org
+                else:
+                    address = "Минск, Беларусь"
+
+                # Use OpenStreetMaps API to resolve geococde address
+                location = Geolocator().geocode(address)
+
                 a = storage.Article(
-                    text=message.raw_text, date=message.date, source=feed
+                    text=message.raw_text,
+                    date=message.date,
+                    source=feed,
+                    location={
+                        "type": "Point",
+                        "location": {
+                            "coordinates": [location.latitude, location.longitude]
+                        },
+                    },
+                    address=location.address,
                 )
                 await a.commit()
 
