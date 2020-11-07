@@ -7,6 +7,8 @@ name = "pypi"
 telethon = "*"
 simple-settings = "*"
 motor = "*"
+sanic = "*"
+sanic-cors = "*"
 
 [dev-packages]
 pre-commit = "*"

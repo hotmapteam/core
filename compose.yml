@@ -16,3 +16,11 @@ services:
         volumes:
             - "./telegram.session:/app/telegram.session"
         command: ["python", "/app/scrapper.py"]
+    api:
+        build: "."
+        links:
+            - db
+        environment:
+            API_LISTEN: "127.0.0.1:8000"
+            SIMPLE_SETTINGS: settings.base
+        command: ["python", "/app/api.py"]

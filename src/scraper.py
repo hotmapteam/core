@@ -11,7 +11,9 @@ async def scrap():
         if feed.type == "telegram":
             async for message in telegram.list_messages(int(feed.uri)):
                 logging.debug("message %r", message)
-                a = storage.Article(text=message.raw_text, date=message.date)
+                a = storage.Article(
+                    text=message.raw_text, date=message.date, source=feed
+                )
                 await a.commit()
 
 
