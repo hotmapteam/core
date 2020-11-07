@@ -53,10 +53,15 @@ if __name__ == "__main__":
 
     parser = argparse.ArgumentParser()
     parser.add_argument("--add-feed", type=str, help="add feed <type,uri>")
+    parser.add_argument("--forever", action="store_true", help="run forever")
     args = parser.parse_args()
 
     if type(args.add_feed) is str:
         asyncio.get_event_loop().run_until_complete(add_feed(*args.add_feed.split(",")))
     else:
         logging.info("starting scrapper")
-        asyncio.get_event_loop().run_until_complete(scrap())
+
+        while args.forever:
+            asyncio.get_event_loop().run_until_complete(scrap())
+        else:
+            asyncio.get_event_loop().run_until_complete(scrap())

@@ -15,7 +15,7 @@ services:
             SIMPLE_SETTINGS: settings.base
         volumes:
             - "./telegram.session:/app/telegram.session"
-        command: ["python", "/app/scrapper.py"]
+        command: ["python", "/app/scrapper.py", "--forever"]
     api:
         build: "."
         links:
