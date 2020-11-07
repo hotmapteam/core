@@ -17,7 +17,7 @@ services:
         volumes:
             - "./telegram.session:/app/telegram.session"
             - "./src/:/app/"
-        command: ["python3", "/app/scraper.py", "--forever", "3"]
+        command: ["python3", "/app/scraper.py", "--fetch", "--forever", "3"]
     api:
         build: "."
         links:

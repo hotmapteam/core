@@ -9,8 +9,9 @@ odb = Instance(db)
 
 @odb.register
 class Feed(Document):
-    type = fields.StringField()
+    type = fields.StringField(required=True)
     uri = fields.StringField()
+    name = fields.StringField(required=True)
     last_ts = fields.NumberField(required=True, default=0)
 
     class Meta:

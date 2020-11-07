@@ -15,7 +15,18 @@ async def get_model(request: Request, model: storage.Document):
     skip = filt.pop("skip", 0)
     limit = filt.pop("limit", 0)
 
-    return response.json(await model.find(filt).skip(skip).limit(limit).to_list(None))
+    return response.json(
+        [
+            {
+                "text": obj.text,
+                "ts": obj.ts,
+                "tags": obj.tags,
+                "address": obj.address,
+                "location": obj.location["location"]["coordinates"],
+            }
+            for obj in await model.find(filt).skip(skip).limit(limit).to_list(None)
+        ]
+    )
 
 
 @app.route("/api/v1/article", methods=["GET", "OPTIONS"])

@@ -30,7 +30,7 @@ money_extractor = MoneyExtractor(morph_vocab)
 addr_extractor = AddrExtractor(morph_vocab)
 
 
-def classificate(text: str, date: typing.Optional[datetime.datetime] = None):
+def segmentate(text: str, date: typing.Optional[datetime.datetime] = None):
     doc = Doc(text)
     doc.segment(segmenter)
     doc.tag_morph(morph_tagger)
@@ -43,4 +43,4 @@ def classificate(text: str, date: typing.Optional[datetime.datetime] = None):
 
 
 if __name__ == "__main__":
-    print(classificate(sys.argv[1]))
+    print(segmentate(sys.argv[1]))
