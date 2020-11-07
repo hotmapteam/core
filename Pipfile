@@ -11,6 +11,7 @@ sanic = "*"
 sanic-cors = "*"
 geopy = "*"
 natasha = "*"
+pytz = "*"
 
 [dev-packages]
 pre-commit = "*"

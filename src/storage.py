@@ -11,6 +11,7 @@ odb = Instance(db)
 class Feed(Document):
     type = fields.StringField()
     uri = fields.StringField()
+    last_ts = fields.NumberField(required=True, default=0)
 
     class Meta:
         collection_name = "feed"
@@ -18,7 +19,7 @@ class Feed(Document):
 
 @odb.register
 class Article(Document):
-    date = fields.DateTimeField(required=True)
+    ts = fields.NumberField(required=True, default=0)
     text = fields.StringField()
     tags = fields.ListField(fields.StringField(), default=[])
     source = fields.ReferenceField("Feed")

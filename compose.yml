@@ -5,17 +5,19 @@ services:
             - "27017:27017"
         volumes:
             - ".db:/data/db"
-    scrapper:
+    scraper:
         build: "."
         links:
             - db
         environment:
             TELEGRAM_API_ID: ${TELEGRAM_API_ID}
             TELEGRAM_API_HASH: ${TELEGRAM_API_HASH}
+            APP_DB_URL: 'mongodb://db'
             SIMPLE_SETTINGS: settings.base
         volumes:
             - "./telegram.session:/app/telegram.session"
-        command: ["python", "/app/scrapper.py", "--forever"]
+            - "./src/:/app/"
+        command: ["python3", "/app/scraper.py", "--forever", "3"]
     api:
         build: "."
         links:
@@ -23,6 +25,9 @@ services:
         environment:
             API_LISTEN: "127.0.0.1:8000"
             SIMPLE_SETTINGS: settings.base
+            APP_DB_URL: 'mongodb://db'
         ports:
             - "8000:8000"
-        command: ["python", "/app/api.py"]
+        command: ["python3", "/app/api.py"]
+        volumes:
+            - "./src/:/app/"
