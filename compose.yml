@@ -23,4 +23,6 @@ services:
         environment:
             API_LISTEN: "127.0.0.1:8000"
             SIMPLE_SETTINGS: settings.base
+        ports:
+            - "8000:8000"
         command: ["python", "/app/api.py"]
